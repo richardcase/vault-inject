@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  labels:
+    app: vault-admission
+  name: vault-admission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-admission
+  template:
+    metadata:
+      labels:
+        app: vault-admission
+    spec:
+      containers:
+        - name: vault-admission
+          image: richardcase/vault-admission:0.0.1
+          imagePullPolicy: Always
+          args:
+            - --tlsCertFile=/etc/vaultinject/certs/cert.pem
+            - --tlsKeyFile=/etc/vaultinject/certs/key.pem
+            - --caFile=/etc/vaultinject/certs/ca-cert.pem
+            - --healthCheckInterval=2s
+            - --healthCheckFile=/health
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+          - name: certs
+            mountPath: /etc/vaultinject/certs
+            readonly: true
+          #livenessProbe:
+          #  exec:
+          #    command:
+      volumes:
+      - name: certs
+        secret:
+          secretName: vault-inject-certs

@@ -1,0 +1,20 @@
+apiVersion: admissionregistration.k8s.io/v1beta
+kind: MutatingWebhookConfiguration
+metadata:
+  name: vault-admission
+webhooks:
+  - name: vault-admission.k8s.io
+    clientConfig:
+        service:
+          name: vault-admission
+          namespace: default
+          path: "/inject"
+    rules:
+      - operations: [ "CREATE" ]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["deployments"]
+    failurePolicy: Fail
+    namespaceSelector:
+        matchLabels:
+            secrets-injection: enabled

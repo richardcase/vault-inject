@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-initiaadmissionlizer
+data:
+  config: |
+    requireAnnotation: false
+    annotationName: admission.kubernetes.io/vault
+    ignoreSystemNamespaces: true
+    vaultAuthMode: Token # Todo add other vault auth backends
+    vaultAddress: http://127.0.0.1:8200
+    vaultPathPattern: /v1/secret/{{.Namespace}}/{{.ContainerName}}
+    secretsPublisher: env # volume or env
+    secretsFilePathPattern: /
+    secretsFileNamePattern: "config.json"
+    secretNamePattern: "{{.Namespace}}.{{.ContainerName}}"
