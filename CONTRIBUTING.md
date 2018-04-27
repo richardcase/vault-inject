@@ -1,18 +1,18 @@
 ## Contributing
 
-Thank you for considering contributing to Vault Initializer. The more people that contribute the better it will be. :tada::+1:
+Thank you for considering contributing to Vault Inject. The more people that contribute the better it will be. :tada::+1:
 
 The following is a guide for contributing and as such shouldn't be treated as hard & fast rules. Use your judgement and feel free to propose changes to this document via pull request.
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. 
+This project and everyone participating in it is governed by the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## How Can I Contribute?
 
 ### Reporting Bugs
 
-* **Ensure the bug was not already reported** by [searching all issues](https://github.com/richardcase/vault-initializer/issues?utf8=%E2%9C%93&q=is%3Aissue).
+* **Ensure the bug was not already reported** by [searching all issues](https://github.com/richardcase/vault-inject/issues?utf8=%E2%9C%93&q=is%3Aissue).
 
 * If you're unable to find an open issue addressing the problem,
   [open a new one][new issue]. Be sure to include a **title and clear
@@ -29,7 +29,7 @@ We welcome new suggestions for enhancements. Enhancement suggestions are tracked
 * **Provide specific examples to demonstrate the steps**. Include copy/pasteable snippets which you use in those examples, as [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
 * **Describe the current behavior** and **explain which behavior you expected to see instead** and why.
 * **Explain why this enhancement would be useful**
-* **Specify which version of Vault Initializer you're using.** 
+* **Specify which version of Vault Initializer you're using.**
 * **Specify the name and version of the OS you're using.**
 
 ### Your First Code Contribution

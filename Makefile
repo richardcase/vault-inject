@@ -8,11 +8,11 @@ VER_IMPORT=github.com/richardcase/vault-initializer/pkg/version
 FLAGS=-X $(VER_IMPORT).GitHash=$(BUILDCOMMIT) -X $(VER_IMPORT).BuildDate=$(BUILDDATE) -X $(VER_IMPORT).Version=$(VERSION)
 
 setup: ## Install all the build and lint dependencies
-	curl https://glide.sh/get | sh
+	curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 	go get -u github.com/alecthomas/gometalinter
 	go get -u github.com/pierrre/gotestcover
 	go get -u golang.org/x/tools/cmd/cover
-	glide install
+	dep ensure
 	gometalinter --install --update
 
 test: ## Run all the tests
@@ -63,13 +63,16 @@ ci: lint test ## Run all the tests and code checks
 build: ## Build a beta version
 	go build -o vault-admission ./cmd/vault-admission/.
 
+build-debug:
+	GOOS=linux go build -o vault-admission ./cmd/vault-admission/.
+
 build-prod: ## Build the production version
 	GOOS=linux go build -a \
 		--ldflags '-extldflags "-static" $(FLAGS)' \
 		-tags netgo \
 		-installsuffix netgo \
-		-o vault-initializer \
-		./cmd/vault-initializer/main.go
+		-o vault-admission \
+		./cmd/vault-admission/main.go
 
 
 install: ## Install to $GOPATH/src

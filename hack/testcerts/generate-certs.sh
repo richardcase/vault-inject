@@ -21,6 +21,9 @@
 
 set -e
 
+[ -z ${service} ] && service=vault-admission
+[ -z ${namespace} ] && namespace=default
+
 cat > client.conf <<EOF
 [req]
 req_extensions = v3_req
@@ -29,11 +32,12 @@ distinguished_name = req_distinguished_name
 [ v3_req ]
 basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-extendedKeyUsage = clientAuth, serverAuth
+extendedKeyUsage = serverAuth, clientAuth
 subjectAltName = @alt_names
 [alt_names]
-IP.1 = 127.0.0.1
-IP.2 = ::1
+DNS.1 = ${service}
+DNS.2 = ${service}.${namespace}
+DNS.3 = ${service}.${namespace}.svc
 EOF
 
 cat > server.conf <<EOF
@@ -44,26 +48,31 @@ distinguished_name = req_distinguished_name
 [ v3_req ]
 basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-extendedKeyUsage = clientAuth, serverAuth
+extendedKeyUsage = serverAuth, clientAuth
 subjectAltName = @alt_names
 [alt_names]
-IP.1 = 127.0.0.1
-IP.2 = ::1
+DNS.1 = ${service}
+DNS.2 = ${service}.${namespace}
+DNS.3 = ${service}.${namespace}.svc
 EOF
 
 # Create a certificate authority
-openssl genrsa -out CAKey.pem 2048
-openssl req -x509 -new -nodes -key CAKey.pem -days 100000 -out CACert.pem -subj "/CN=${CN_BASE}_ca"
+#openssl genrsa -out CAKey.pem 2048
+#openssl req -x509 -new -nodes -key CAKey.pem -days 100000 -out CACert.pem -subj "/CN=${CN_BASE}_ca"
+### Commented the above out to force using the minikube CA
+
+CERT_ROOT=${HOME}/.minikube/certs
+
 
 # Create a server certiticate
 openssl genrsa -out ServerKey.pem 2048
-openssl req -new -key ServerKey.pem -out server.csr -subj "/CN=${CN_BASE}_server" -config server.conf
-openssl x509 -req -in server.csr -CA CACert.pem -CAkey CAKey.pem -CAcreateserial -out ServerCert.pem -days 100000 -extensions v3_req -extfile server.conf
+openssl req -new -key ServerKey.pem -out server.csr -subj "/CN=${service}.${namespace}.svc" -config server.conf
+openssl x509 -req -in server.csr -CA ${CERT_ROOT}/ca.pem -CAkey ${CERT_ROOT}/ca-key.pem -CAcreateserial -out ServerCert.pem -days 100000 -extensions v3_req -extfile server.conf
 
 # Create a client certiticate
 openssl genrsa -out ClientKey.pem 2048
-openssl req -new -key ClientKey.pem -out client.csr -subj "/CN=${CN_BASE}_client" -config client.conf
-openssl x509 -req -in client.csr -CA CACert.pem -CAkey CAKey.pem -CAcreateserial -out ClientCert.pem -days 100000 -extensions v3_req -extfile client.conf
+openssl req -new -key ClientKey.pem -out client.csr -subj "/CN=${service}.${namespace}.svc" -config client.conf
+openssl x509 -req -in client.csr -CA ${CERT_ROOT}/ca.pem -CAkey ${CERT_ROOT}/ca-key.pem -CAcreateserial -out ClientCert.pem -days 100000 -extensions v3_req -extfile client.conf
 
 
 # Clean up after we're done.

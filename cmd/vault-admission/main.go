@@ -21,16 +21,16 @@ import (
 )
 
 const (
-	defaultWebhookName         = "vault.admission"
+	defaultWebhookName         = "vault-admission.k8s.io"
 	defaultConfigmap           = "vault-admission"
-	defaultSecret              = "valut-admission"
+	defaultSecret              = "vault-admission"
 	defaultTlsCertFile         = "/etc/vaultinject/certs/cert-chain.pem"
 	defaultTlsKeyFile          = "/etc/vaultinject/certs/key.pem"
 	defaultCaCertFile          = "/etc/vaultinject/certs/root-cert.pem"
-	defaultPort                = 443
+	defaultPort                = 8000
 	defaultHealthCheckInterval = 0
 	defaultHealthCheckFile     = ""
-	defaultWebhookConfigName   = "vault-admission"
+	defaultWebhookConfigName   = "vault-admission.k8s.io"
 )
 
 var (

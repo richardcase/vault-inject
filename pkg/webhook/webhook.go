@@ -4,15 +4,14 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"html"
 	"io/ioutil"
 	"net/http"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/golang/glog"
-	"github.com/howeyc/fsnotify"
 	"istio.io/istio/pkg/log"
 	//vault "github.com/hashicorp/vault/api"
 	clientset "github.com/richardcase/vault-admission/pkg/client/clientset/versioned"
@@ -91,12 +90,12 @@ type Webhook struct {
 	healthCheckInterval time.Duration
 	healthCheckFile     string
 
-	server     *http.Server
-	configFile string
-	watcher    *fsnotify.Watcher
-	certFile   string
-	keyFile    string
-	cert       *tls.Certificate
+	server *http.Server
+	//configFile string
+	//watcher    *fsnotify.Watcher
+	certFile string
+	keyFile  string
+	cert     *tls.Certificate
 }
 
 // NewWebhook returns a new vault initializer
@@ -137,12 +136,14 @@ func NewWebhook(
 	eventBroadcaster.StartRecordingToSink(&typedcorev1.EventSinkImpl{Interface: kubeclientset.CoreV1().Events("")})
 	recorder := eventBroadcaster.NewRecorder(scheme.Scheme, corev1.EventSource{Component: agentName})
 
+	glog.V(2).Infof("Using certfile: %s", p.CertFile)
+	glog.V(2).Infof("Using keyfile: %s", p.KeyFile)
 	pair, err := tls.LoadX509KeyPair(p.CertFile, p.KeyFile)
 	if err != nil {
 		return nil, err
 	}
 
-	watcher, err := fsnotify.NewWatcher()
+	/*watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +154,7 @@ func NewWebhook(
 		if err := watcher.Watch(watchDir); err != nil {
 			return nil, fmt.Errorf("could not watch %v: %v", file, err)
 		}
-	}
+	}*/
 
 	wh := &Webhook{
 		kubeclientset:   kubeclientset,
@@ -169,8 +170,8 @@ func NewWebhook(
 		server: &http.Server{
 			Addr: fmt.Sprintf(":%v", p.Port),
 		},
-		configFile:          p.ConfigFile,
-		watcher:             watcher,
+		//configFile:          p.ConfigFile,
+		//watcher:             watcher,
 		healthCheckInterval: p.HealthCheckInterval,
 		healthCheckFile:     p.HealthCheckFile,
 		certFile:            p.CertFile,
@@ -178,8 +179,12 @@ func NewWebhook(
 		cert:                &pair,
 	}
 	wh.server.TLSConfig = &tls.Config{GetCertificate: wh.getCert}
+	wh.server.TLSConfig.InsecureSkipVerify = true
 	h := http.NewServeMux()
 	h.HandleFunc("/inject", wh.serveInject)
+	h.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Pong, %q", html.EscapeString(r.URL.Path))
+	})
 	wh.server.Handler = h
 
 	glog.Info("Setting up event handlers")
@@ -209,7 +214,7 @@ func (wh *Webhook) Run(stopCh <-chan struct{}) error {
 			glog.Errorf("ListenAndServeTLS for admission webhook returned error: %v", err)
 		}
 	}()
-	defer wh.watcher.Close()
+	//defer wh.watcher.Close()
 	defer wh.server.Close()
 
 	var healthC <-chan time.Time
@@ -236,12 +241,12 @@ func (wh *Webhook) Run(stopCh <-chan struct{}) error {
 			wh.mu.Lock()
 			wh.cert = &pair
 			wh.mu.Unlock()*/
-		case event := <-wh.watcher.Event:
-			if event.IsModify() || event.IsCreate() {
-				timerC = time.After(watchDebounceDelay)
-			}
-		case err := <-wh.watcher.Error:
-			glog.Errorf("Watcher error: %v", err)
+		//case event := <-wh.watcher.Event:
+		//	if event.IsModify() || event.IsCreate() {
+		//		timerC = time.After(watchDebounceDelay)
+		//	}
+		//case err := <-wh.watcher.Error:
+		//	glog.Errorf("Watcher error: %v", err)
 		case <-healthC:
 			content := []byte(`ok`)
 			if err := ioutil.WriteFile(wh.healthCheckFile, content, 0644); err != nil {

@@ -1,5 +1,6 @@
-vault-initializer
+vault-admission
 coverage.txt
+debug
 
 vendor
 .idea*
@@ -21,10 +22,12 @@ coverage.out
 
 .DS_Store
 
-
 # bazel
 bazel-bin
 bazel-genfiles
 bazel-vault-initializer
 bazel-out
 bazel-testlogs
+
+telepresence.log
+_vendor*

@@ -5,10 +5,10 @@ import "time"
 // Parameters configures parameters for the webhook.
 type Parameters struct {
 	// ConfigFile is the path to the sidecar injection configuration file.
-	ConfigFile string
+	//ConfigFile string
 
 	// MeshFile is the path to the mesh configuration file.
-	MeshFile string
+	//MeshFile string
 
 	// CertFile is the path to the x509 certificate for https.
 	CertFile string
