@@ -11,10 +11,10 @@ APP_ROOT=${SCRIPT_ROOT}/..
 eval $(minikube docker-env)
 
 # Build
-make -f ${APP_ROOT}/Makefile build-debug
+# make -f ${APP_ROOT}/Makefile build-debug
 
 # Build image
-docker build -f ${APP_ROOT}/Dockerfile -t richardcase/vault-admission:0.0.0d ${APP_ROOT}
+docker build -f ${APP_ROOT}/Dockerfile-nobuild -t richardcase/vault-admission:0.0.0d ${APP_ROOT}
 
 # Run in minikube
 kubectl run vault-admission --image=richardcase/vault-admission:0.0.0d --image-pull-policy=Never

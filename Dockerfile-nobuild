@@ -1,15 +1,7 @@
-# Build stage
-FROM golang:1.9 as builder
-WORKDIR /go/src/github.com/richardcase/vault-admission
-ADD . .
-RUN make setup && make build-prod
-
-
-# Final Stage
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 
-COPY --from=builder /go/src/github.comrichardcase/vault-admission/vault-admission /app/vault-admission
+ADD vault-admission /app/vault-admission
 ENTRYPOINT /app/vault-admission
 
 # Build-time metadata as defined at http://label-schema.org

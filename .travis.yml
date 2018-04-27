@@ -1,13 +1,15 @@
-language: go
-go: 1.9.1
-install:
-#  - npm install -g snyk
-  - make setup
-#  - snyk test -d
+sudo: required
+
+services:
+- docker
+
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
+
 script:
-  - make ci
-  - make build-prod
-after_success:
     - export REPO_VAULTINIT=richardcase/vault-admission
     - export VERSION=`cat ./VERSION`
     - export BUILDDATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
