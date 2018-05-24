@@ -1,9 +1,9 @@
 package publisher
 
 import (
-	"github.com/richardcase/vault-admission/pkg/apis/vaultinject/v1alpha1"
-	"github.com/richardcase/vault-admission/pkg/inject/publisher/environment"
-	"github.com/richardcase/vault-admission/pkg/inject/publisher/volume"
+	"github.com/richardcase/vault-inject/pkg/apis/vaultinject/v1alpha1"
+	"github.com/richardcase/vault-inject/pkg/inject/publisher/environment"
+	"github.com/richardcase/vault-inject/pkg/inject/publisher/volume"
 	"k8s.io/api/apps/v1beta1"
 	clientset "k8s.io/client-go/kubernetes"
 )

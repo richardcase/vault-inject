@@ -13,7 +13,7 @@ You need Kubernetes 1.9.0+. If you want to use minikube you can use the followin
 ```
 minikube start \
 	--extra-config=apiserver.Admission.PluginNames=NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota \
-	--kubernetes-version=v1.9.0
+	--kubernetes-version=v1.9.0 --vm-driver=hyperkit
 ```
 
 Edit and deploy the webhook config:

@@ -1,5 +1,5 @@
 /*
-Copyright 2017 The Vault Admission Conttroller Authors.
+Copyright 2017 The Vault Inject Controller Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ limitations under the License.
 package fake
 
 import (
-	clientset "github.com/richardcase/vault-admission/pkg/client/clientset/versioned"
-	vaultinjectv1alpha1 "github.com/richardcase/vault-admission/pkg/client/clientset/versioned/typed/vaultinject/v1alpha1"
-	fakevaultinjectv1alpha1 "github.com/richardcase/vault-admission/pkg/client/clientset/versioned/typed/vaultinject/v1alpha1/fake"
+	clientset "github.com/richardcase/vault-inject/pkg/client/clientset/versioned"
+	vaultinjectv1alpha1 "github.com/richardcase/vault-inject/pkg/client/clientset/versioned/typed/vaultinject/v1alpha1"
+	fakevaultinjectv1alpha1 "github.com/richardcase/vault-inject/pkg/client/clientset/versioned/typed/vaultinject/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

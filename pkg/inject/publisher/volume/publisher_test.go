@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	vi "github.com/richardcase/vault-admission/pkg/apis/vaultinject/v1alpha1"
+	vi "github.com/richardcase/vault-inject/pkg/apis/vaultinject/v1alpha1"
 	"k8s.io/api/apps/v1beta1"
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

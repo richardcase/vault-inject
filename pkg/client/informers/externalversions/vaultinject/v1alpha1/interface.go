@@ -1,5 +1,5 @@
 /*
-Copyright 2017 The Vault Admission Conttroller Authors.
+Copyright 2017 The Vault Inject Controller Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	internalinterfaces "github.com/richardcase/vault-admission/pkg/client/informers/externalversions/internalinterfaces"
+	internalinterfaces "github.com/richardcase/vault-inject/pkg/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.

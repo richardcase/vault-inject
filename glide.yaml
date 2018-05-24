@@ -1,4 +1,4 @@
-package: github.com/richardcase/vault-admission
+package: github.com/richardcase/vault-inject
 import:
 - package: k8s.io/apimachinery
   version: release-1.9

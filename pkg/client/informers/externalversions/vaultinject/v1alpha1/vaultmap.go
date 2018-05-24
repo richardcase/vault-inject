@@ -1,5 +1,5 @@
 /*
-Copyright 2017 The Vault Admission Conttroller Authors.
+Copyright 2017 The Vault Inject Controller Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ package v1alpha1
 import (
 	time "time"
 
-	vaultinject_v1alpha1 "github.com/richardcase/vault-admission/pkg/apis/vaultinject/v1alpha1"
-	versioned "github.com/richardcase/vault-admission/pkg/client/clientset/versioned"
-	internalinterfaces "github.com/richardcase/vault-admission/pkg/client/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/richardcase/vault-admission/pkg/client/listers/vaultinject/v1alpha1"
+	vaultinject_v1alpha1 "github.com/richardcase/vault-inject/pkg/apis/vaultinject/v1alpha1"
+	versioned "github.com/richardcase/vault-inject/pkg/client/clientset/versioned"
+	internalinterfaces "github.com/richardcase/vault-inject/pkg/client/informers/externalversions/internalinterfaces"
+	v1alpha1 "github.com/richardcase/vault-inject/pkg/client/listers/vaultinject/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"

@@ -116,12 +116,6 @@
   revision = "a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4"
 
 [[projects]]
-  name = "github.com/howeyc/fsnotify"
-  packages = ["."]
-  revision = "441bbc86b167f3c1f4786afae9931403b99fdacf"
-  version = "v0.9.0"
-
-[[projects]]
   branch = "master"
   name = "github.com/howeyc/gopass"
   packages = ["."]
@@ -578,6 +572,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5c05b5689ca0b3a33abb7f7b13224d21f8a8eb316a3c1c7f8ecce42438071a9c"
+  inputs-digest = "eb8e092b65dd2c532c02d0dec83778a64c7eafdcf987e69ea8d3b2fdead0664c"
   solver-name = "gps-cdcl"
   solver-version = 1

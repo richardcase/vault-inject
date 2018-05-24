@@ -1,7 +1,7 @@
 package environment
 
 import (
-	"github.com/richardcase/vault-admission/pkg/apis/vaultinject/v1alpha1"
+	"github.com/richardcase/vault-inject/pkg/apis/vaultinject/v1alpha1"
 	"k8s.io/api/apps/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	clientset "k8s.io/client-go/kubernetes"

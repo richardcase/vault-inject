@@ -5,7 +5,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	"github.com/richardcase/vault-admission/pkg/apis/vaultinject"
+	"github.com/richardcase/vault-inject/pkg/apis/vaultinject"
 )
 
 var (
