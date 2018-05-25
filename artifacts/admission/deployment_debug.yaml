@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  labels:
+    app: vault-admission
+  name: vault-admission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-admission
+  template:
+    metadata:
+      labels:
+        app: vault-admission
+    spec:
+      volumes:
+        - name: vault-admission-tls
+          secret:
+            secretName: "vault-admission-tls"
+      containers:
+        - name: vault-admission
+          image: richardcase/vault-admission:0.0.0d
+          imagePullPolicy: Never
+          securityContext:
+            capabilities:
+              add:
+                - SYS_PTRACE
+          ports:
+            - containerPort: 8000
+            - containerPort: 40000
+          volumeMounts:
+          - name: vault-admission-tls
+            readOnly: true
+            mountPath: "/certs"
+

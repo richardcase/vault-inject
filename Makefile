@@ -64,7 +64,7 @@ build: ## Build a beta version
 	go build -o vault-admission ./cmd/vault-admission/.
 
 build-debug:
-	GOOS=linux go build -o vault-admission ./cmd/vault-admission/.
+	GOOS=linux CGO_ENABLED=0 go build -gcflags "all=-N -l" -o vault-admission ./cmd/vault-admission/.
 
 build-prod: ## Build the production version
 	GOOS=linux go build -a \

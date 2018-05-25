@@ -9,4 +9,4 @@ spec:
     - port: 443
       targetPort: 8000
   selector:
-    role: vault-admission
+    app: vault-admission

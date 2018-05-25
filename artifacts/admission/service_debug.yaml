@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: vault-admission-debug
+  name: vault-admission-debug
+spec:
+  type: NodePort
+  ports:
+    - port: 40000
+      targetPort: 40000
+      protocol: TCP
+  selector:
+    app: vault-admission

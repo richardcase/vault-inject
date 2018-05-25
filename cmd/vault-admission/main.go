@@ -2,17 +2,14 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
 	"time"
 
 	"github.com/golang/glog"
 	clientset "github.com/richardcase/vault-inject/pkg/client/clientset/versioned"
 	informers "github.com/richardcase/vault-inject/pkg/client/informers/externalversions"
 	"github.com/richardcase/vault-inject/pkg/signals"
-	"github.com/richardcase/vault-inject/pkg/util"
 	"github.com/richardcase/vault-inject/pkg/version"
 	"github.com/richardcase/vault-inject/pkg/webhook"
-	"istio.io/istio/pkg/log"
 	corev1 "k8s.io/api/core/v1"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
@@ -21,12 +18,12 @@ import (
 )
 
 const (
-	defaultWebhookName         = "vault-admission.k8s.io"
-	defaultConfigmap           = "vault-admission"
-	defaultSecret              = "vault-admission"
-	defaultTlsCertFile         = "/etc/vaultinject/certs/cert-chain.pem"
-	defaultTlsKeyFile          = "/etc/vaultinject/certs/key.pem"
-	defaultCaCertFile          = "/etc/vaultinject/certs/root-cert.pem"
+	defaultWebhookName = "vault-admission.k8s.io"
+	defaultConfigmap   = "vault-admission"
+	defaultSecret      = "vault-admission"
+	defaultTlsCertFile = "/certs/cert-chain.pem"
+	defaultTlsKeyFile  = "/certs/key.pem"
+	//defaultCaCertFile          = "/etc/vaultinject/certs/root-cert.pem"
 	defaultPort                = 8000
 	defaultHealthCheckInterval = 0
 	defaultHealthCheckFile     = ""
@@ -34,15 +31,15 @@ const (
 )
 
 var (
-	webhookName         string
-	namespace           string
-	kubeconfig          string
-	configmap           string
-	secretName          string
-	masterURL           string
-	tlsCertFile         string
-	tlsKeyFile          string
-	caCertFile          string
+	webhookName string
+	namespace   string
+	kubeconfig  string
+	configmap   string
+	secretName  string
+	masterURL   string
+	tlsCertFile string
+	tlsKeyFile  string
+	//caCertFile          string
 	port                int
 	healthCheckInterval time.Duration
 	healthCheckFile     string
@@ -100,9 +97,9 @@ func main() {
 		glog.Fatalf("Error creating webhook: %v", err)
 	}
 
-	if err := patchCert(); err != nil {
-		glog.Fatalf("Failed to patch webhook config: %v", err)
-	}
+	//if err := patchCert(); err != nil {
+	//	glog.Fatalf("Failed to patch webhook config: %v", err)
+	//}
 
 	go kubeInformerFactory.Start(stopCH)
 	go mapInformerFactory.Start(stopCH)
@@ -112,7 +109,7 @@ func main() {
 	}
 }
 
-func patchCert() error {
+/*func patchCert() error {
 	const retryTimes = 6 // Try for one minute.
 	client, err := createClientset(kubeconfig)
 	if err != nil {
@@ -133,7 +130,7 @@ func patchCert() error {
 		time.Sleep(time.Second * 10)
 	}
 	return err
-}
+}*/
 
 func createClientset(kubeconfigFile string) (*kubernetes.Clientset, error) {
 	var err error
@@ -159,7 +156,7 @@ func init() {
 
 	flag.StringVar(&tlsCertFile, "tlsCertFile", defaultTlsCertFile, "File containing the x509 Certificate for HTTPS.")
 	flag.StringVar(&tlsKeyFile, "tlsKeyFile", defaultTlsKeyFile, "File containing the x509 private key matching --tlsCertFile.")
-	flag.StringVar(&caCertFile, "caCertFile", defaultCaCertFile, "File containing the x509 Certificate for HTTPS.")
+	//flag.StringVar(&caCertFile, "caCertFile", defaultCaCertFile, "File containing the x509 Certificate for HTTPS.")
 	flag.IntVar(&port, "port", defaultPort, "Webhook port")
 	flag.DurationVar(&healthCheckInterval, "healthCheckInterval", defaultHealthCheckInterval, "Configure how frequently the health check file specified by --healhCheckFile should be updated")
 	flag.StringVar(&healthCheckFile, "healthCheckFile", defaultHealthCheckFile, "File that should be periodically updated if health checking is enabled")

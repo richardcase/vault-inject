@@ -1,0 +1,18 @@
+FROM golang:1.9-alpine3.7
+
+# Compile Delve
+RUN apk add --no-cache git
+RUN go get github.com/derekparker/delve/cmd/dlv
+
+# Expose 8000 port number for app and also 40000 for debugger
+EXPOSE 40000 8000
+
+# Allow delve to run on Alpine based containers.
+RUN apk add --no-cache libc6-compat
+RUN apk --no-cache add ca-certificates
+
+ADD vault-admission /app/vault-admission
+
+# Start debugger with application
+#CMD ["dlv", "--listen=:40000", "--headless=true", "--api-version=2", "exec", "/app/vault-admission --tlsCertFile=/certs/tls.crt --tlsKeyFile=/certs/tls.key --healthCheckInterval=2s --healthCheckFile=/health"]
+CMD ["dlv", "--listen=:40000", "--headless=true", "--api-version=2", "exec", "/app/vault-admission", "--", "--tlsCertFile=/certs/tls.crt", "--tlsKeyFile=/certs/tls.key", "--healthCheckInterval=2s", "--healthCheckFile=/health"]
