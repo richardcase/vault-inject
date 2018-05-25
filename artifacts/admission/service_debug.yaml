@@ -7,8 +7,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 40000
-      targetPort: 40000
-      protocol: TCP
+    - name: delve 
+      port: 2345
+      targetPort: 2345
+      nodePort: 32345
   selector:
     app: vault-admission

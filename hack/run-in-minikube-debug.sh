@@ -15,7 +15,7 @@ eval $(minikube docker-env)
 
 # Build image
 make build-debug
-docker build -f ${APP_ROOT}/Dockerfile-debug-2 -t richardcase/vault-admission:0.0.0d ${APP_ROOT}
+docker build -f ${APP_ROOT}/Dockerfile-debug -t richardcase/vault-admission:0.0.0d ${APP_ROOT}
 
 #docker build -f ${APP_ROOT}/Dockerfile-debug -t richardcase/vault-admission:0.0.0d ${APP_ROOT}
 

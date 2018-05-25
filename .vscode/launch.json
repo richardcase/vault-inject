@@ -10,7 +10,7 @@
         "request": "launch",
         "mode": "remote",
         "remotePath": "${workspaceRoot}",
-        "port": 40000,
+        "port": 32345,
         "host": "192.168.64.16",
         "program": "${workspaceRoot}",
         "env": {},

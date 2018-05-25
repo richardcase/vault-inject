@@ -23,12 +23,15 @@ spec:
           image: richardcase/vault-admission:0.0.0d
           imagePullPolicy: Never
           securityContext:
+            privileged: true
             capabilities:
               add:
                 - SYS_PTRACE
           ports:
-            - containerPort: 8000
-            - containerPort: 40000
+            - name: delve
+              containerPort: 2345
+            - name: http
+              containerPort: 8000
           volumeMounts:
           - name: vault-admission-tls
             readOnly: true
